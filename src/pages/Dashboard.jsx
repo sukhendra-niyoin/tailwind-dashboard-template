@@ -18,8 +18,27 @@ import DashboardCard11 from '../partials/dashboard/DashboardCard11';
 import DashboardCard12 from '../partials/dashboard/DashboardCard12';
 import DashboardCard13 from '../partials/dashboard/DashboardCard13';
 import Banner from '../partials/Banner';
+import UpperNav from '../partials/dashboard/UpperNav';
+import { Link } from 'react-router-dom';
 
 function Dashboard() {
+
+  const fullScreenRoutes = [
+    "/reports/dispute-reports",
+    "/reports/generate-token",
+    "/reports/ledger",
+    "/reports/login-info",
+    "/reports/my-earn",
+    "/reports/bank-info",
+    "/reports/invoice",
+    "/reports/day-book",
+    "/reports/help",
+  ];
+
+  // If the current route is in the list, show only the Outlet
+  if (fullScreenRoutes.includes(location.pathname)) {
+    return <Outlet />;
+  }
 
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
@@ -49,20 +68,19 @@ function Dashboard() {
               {/* Right: Actions */}
               <div className="grid grid-flow-col sm:auto-cols-max justify-start sm:justify-end gap-2">
                 {/* Filter button */}
-                <FilterButton align="right" />
-                {/* Datepicker built with React Day Picker */}
-                <Datepicker align="right" />
-                {/* Add view button */}
-                <button className="btn bg-gray-900 text-gray-100 hover:bg-gray-800 dark:bg-gray-100 dark:text-gray-800 dark:hover:bg-white">
-                  <svg className="fill-current shrink-0 xs:hidden" width="16" height="16" viewBox="0 0 16 16">
-                    <path d="M15 7H9V1c0-.6-.4-1-1-1S7 .4 7 1v6H1c-.6 0-1 .4-1 1s.4 1 1 1h6v6c0 .6.4 1 1 1s1-.4 1-1V9h6c.6 0 1-.4 1-1s-.4-1-1-1z" />
-                  </svg>
-                  <span className="max-xs:sr-only">Add View</span>
-                </button>                
+                <Link
+                  className="flex items-center gap-2 bg-blue-500 border-2 text-sm border-blue-500 text-white dark:bg-slate-700 dark:border-slate-600 px-4 py-1 rounded hover:bg-white hover:text-blue-600 dark:hover:bg-slate-600 dark:hover:text-slate-200 transition-all duration-300 ease-in-out"
+                  align="right"
+                  to="manage-profile">
+                  Manage Profile
+                </Link>
+
               </div>
 
             </div>
-
+            <div className='mb-4'>
+              <UpperNav />
+            </div>
             {/* Cards */}
             <div className="grid grid-cols-12 gap-6">
 
@@ -86,7 +104,7 @@ function Dashboard() {
               <DashboardCard12 />
               {/* Card (Income/Expenses) */}
               <DashboardCard13 />
-              
+
             </div>
 
           </div>

@@ -1,91 +1,78 @@
 import { useState } from 'react';
-import { Link, Outlet, useLocation } from 'react-router-dom';
 import Sidebar from '../../partials/Sidebar';
 import Header from '../../partials/Header';
+import Table from '../table/Table';
 
 const Reports = () => {
     const [sidebarOpen, setSidebarOpen] = useState(false);
-    const [activeSection, setActiveSection] = useState('basic');
-    const [selectedReport, setSelectedReport] = useState('notifications');
-    const location = useLocation();
 
-    // Routes where only the Outlet should be shown
-    const fullScreenRoutes = [
-        "/reports/dispute-reports",
-        "/reports/generate-token",
-        "/reports/ledger",
-        "/reports/login-info",
-        "/reports/my-earn",
-        "/reports/bank-info",
-        "/reports/invoice",
-        "/reports/day-book",
-        "/reports/help",
-    ];
-
-    // If the current route is in the list, show only the Outlet
-    if (fullScreenRoutes.includes(location.pathname)) {
-        return <Outlet />;
-    }
 
     return (
         <div className="flex h-screen overflow-hidden">
-            {/* Sidebar */}
-            <Sidebar sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
-
-            {/* Content area */}
-            <div className="relative flex flex-col flex-1 overflow-y-auto overflow-x-hidden">
-                {/* Site header */}
-                <Header sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
-                <main className='grow'>
-                    <div className="px-4 sm:px-6 lg:px-8 py-8 w-full max-w-9xl mx-auto">
-                        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                            {/* Left Panel */}
-                            <div className='shadow-lg p-3 rounded-lg bg-white dark:bg-slate-800'>
-                                <div className='flex flex-col sm:flex-row justify-between gap-4 mb-6 text-sm lg:text-xs'>
-                                    <button onClick={() => setActiveSection('basic')} className={`${activeSection === 'basic' ? 'bg-blue-600 text-white dark:bg-slate-700' : 'bg-white dark:bg-slate-800 text-blue-600 dark:text-blue-400'} border border-blue-600 dark:border-blue-400 text-center rounded p-1`}>Basic Info & Setting</button>
-                                    <button onClick={() => setActiveSection('manage')} className={`${activeSection === 'manage' ? 'bg-blue-600 text-white dark:bg-slate-700' : 'bg-white dark:bg-slate-800 text-blue-600 dark:text-blue-400'} border border-blue-600 dark:border-blue-400 text-center rounded p-1`}>Manage Profile</button>
-                                </div>
-                                <div>
-                                    {activeSection === 'basic' && (
-                                        <div className='flex flex-col text-sm space-y-1'>
-                                            <Link to="dispute-reports" className="text-slate-800 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-700 rounded-lg transition-colors duration-200">Dispute Report</Link>
-                                            <Link to="generate-token" className="text-slate-800 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-700 rounded-lg transition-colors duration-200">Generate Token</Link>
-                                            <Link to="ledger" className="text-slate-800 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-700 rounded-lg transition-colors duration-200">Ledger</Link>
-                                            <Link to="login-info" className="text-slate-800 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-700 rounded-lg transition-colors duration-200">Login Info</Link>
-                                            <Link to="my-earn" className="text-slate-800 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-700 rounded-lg transition-colors duration-200">My Earn</Link>
-                                            <Link to="bank-info" className="text-slate-800 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-700 rounded-lg transition-colors duration-200">Bank Info</Link>
-                                            <Link to="invoice" className="text-slate-800 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-700 rounded-lg transition-colors duration-200">Invoice</Link>
-                                            <Link to="day-book" className="text-slate-800 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-700 rounded-lg transition-colors duration-200">Day Book</Link>
-                                            <Link to="help" className="text-slate-800 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-700 rounded-lg transition-colors duration-200">Help</Link>
-                                        </div>
-                                    )}
-                                    {activeSection === 'manage' && (
-                                        <div className='flex flex-col space-y-4'>
-                                            <Link to="edit-profile" className="text-slate-800 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-700 p-3 rounded-lg transition-colors duration-200">Edit Profile</Link>
-                                            <Link to="change-password" className="text-slate-800 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-700 p-3 rounded-lg transition-colors duration-200">Change Password</Link>
-                                            <Link to="privacy-settings" className="text-slate-800 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-700 p-3 rounded-lg transition-colors duration-200">Privacy Settings</Link>
-                                        </div>
-                                    )}
-                                </div>
-                            </div>
-
-                            {/* Right Panel */}
-                            <div className='md:col-span-2 shadow-lg py-2 p-3 rounded-lg bg-white dark:bg-slate-800'>
-                                {/* Report Tabs */}
-                                <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-4 xl:grid-cols-6 gap-2 text-sm lg:text-xs'>
-                                    <button onClick={() => setSelectedReport('notifications')} className={`${selectedReport === 'notifications' ? 'bg-blue-600 text-white dark:bg-slate-700' : 'bg-white dark:bg-slate-800 text-blue-600 dark:text-blue-400'} border border-blue-600 dark:border-blue-400 text-center rounded p-1`}>Notifications</button>
-                                    <button onClick={() => setSelectedReport('alerts')} className={`${selectedReport === 'alerts' ? 'bg-blue-600 text-white dark:bg-slate-700' : 'bg-white dark:bg-slate-800 text-blue-600 dark:text-blue-400'} border border-blue-600 dark:border-blue-400 text-center rounded p-1`}>Alerts</button>
-                                    <button onClick={() => setSelectedReport('activities')} className={`${selectedReport === 'activities' ? 'bg-blue-600 text-white dark:bg-slate-700' : 'bg-white dark:bg-slate-800 text-blue-600 dark:text-blue-400'} border border-blue-600 dark:border-blue-400 text-center rounded p-1`}>Activities</button>
-                                </div>
-
-                                {/* Report Content */}
-                                <Outlet />
-                            </div>
-                        </div>
+        {/* Sidebar */}
+        <Sidebar sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
+  
+        {/* Content area */}
+        <div className="relative flex flex-col flex-1 overflow-y-auto overflow-x-hidden">
+          {/* Site header */}
+          <Header sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
+          <main className="grow">
+            <div className="px-4 sm:px-6 lg:px-8 py-8 w-full max-w-9xl mx-auto">
+              <div className="bg-white dark:bg-gray-800 shadow-lg rounded-lg p-6">
+                <div className="mb-3">
+                  <h2 className="text-2xl font-bold text-blue-600 dark:text-white"> Report</h2>
+                </div>
+                <div className="mb-6">
+                  <form className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
+                    <div>
+                      <label htmlFor="startDate" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                        Start Date
+                      </label>
+                      <input
+                        type="date"
+                        id="startDate"
+                        className="w-full border text-sm rounded-lg py-1 px-3 text-gray-700 bg-white dark:bg-gray-700 dark:text-white dark:border-gray-600 focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                      />
                     </div>
-                </main>
+                    <div>
+                      <label htmlFor="endDate" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                        End Date
+                      </label>
+                      <input
+                        type="date"
+                        id="endDate"
+                        className="w-full border text-sm rounded-lg py-1 px-3 text-gray-700 bg-white dark:bg-gray-700 dark:text-white dark:border-gray-600 focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                      />
+                    </div>
+                    <div className="flex items-end">
+                      <button type="submit" className="bg-blue-500 border-2 text-sm border-blue-500 text-white dark:bg-slate-700 dark:border-slate-600 px-4 py-1 rounded hover:bg-white hover:text-blue-600 dark:hover:bg-slate-600 dark:hover:text-slate-200 transition-all duration-300 ease-in-out">
+                        Search
+                      </button>
+                    </div>
+                    <div className="flex items-end gap-2">
+                      <button
+                        type="button"
+                        className="flex-1 bg-red-600 hover:bg-red-700 text-sm text-white font-medium py-1 px-4 rounded-lg transition duration-150 ease-in-out focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2"
+                      >
+                        PDF
+                      </button>
+                      <button
+                        type="button"
+                        className="flex-1 bg-green-600 hover:bg-green-700 text-sm text-white font-medium py-1 px-4 rounded-lg transition duration-150 ease-in-out focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2"
+                      >
+                        Export
+                      </button>
+                    </div>
+                  </form>
+                </div>
+                <div className="overflow-x-auto">
+                  <Table />
+                </div>
+              </div>
             </div>
+          </main>
         </div>
+      </div>
     );
 };
 
